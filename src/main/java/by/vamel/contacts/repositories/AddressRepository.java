@@ -46,16 +46,35 @@ public class AddressRepository {
         }
     }
 
+    public void destroy() {
+        try {
+            Connection connection = dataSource.getConnection();
+            try {
+                Statement statement = connection.createStatement();
+                try {
+                    String query = "drop table address";
+                    statement.execute(query);
+                } finally {
+                    statement.close();
+                }
+            } finally {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void create(Address address) {
         try {
             Connection connection = dataSource.getConnection();
             try {
                 Statement statement = connection.createStatement();
                 try {
-                    String query = "insert into adress (street, city) values (" +
+                    String query = "insert into address (street, city) values (" +
                             "'" + address.getStreet() + "', " +
                             " '" + address.getCity() + "')";
-                    statement.execute(query, Statement.RETURN_GENERATED_KEYS);
+                    statement.executeUpdate(query, Statement.RETURN_GENERATED_KEYS);
                     ResultSet resultSet = statement.getGeneratedKeys();
                     try {
                         if (resultSet.next()) {
