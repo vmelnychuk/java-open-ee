@@ -13,8 +13,15 @@ import javax.servlet.annotation.WebListener;
 public class Setup implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        new AddressRepository().init();
-        new ContactRepository().init();
+        AddressRepository addressRepository = new AddressRepository();
+        addressRepository.init();
+        addressRepository.create(new Address("Ost", "Vin"));
+
+        ContactRepository contactRepository = new ContactRepository();
+        contactRepository.init();
+        contactRepository.create(new Contact("vasyl", 0L));
+        contactRepository.create(new Contact("petro", 0L));
+        contactRepository.create(new Contact("ivan", 0L));
     }
 
     @Override

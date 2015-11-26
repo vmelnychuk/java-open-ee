@@ -5,5 +5,4 @@
     <resource-ref>
         <res-ref-name>jdbc/trainingdb</res-ref-name>
     </resource-ref>
-    
 </web-app>
