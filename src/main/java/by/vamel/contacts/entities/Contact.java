@@ -1,9 +1,17 @@
 package by.vamel.contacts.entities;
 
-public class Contacts {
+public class Contact {
     private Long id;
     private String name;
     private Long addressId;
+
+    public Contact() {
+    }
+
+    public Contact(String name, Long addressId) {
+        this.name = name;
+        this.addressId = addressId;
+    }
 
     public Long getId() {
         return id;
@@ -27,5 +35,14 @@ public class Contacts {
 
     public void setAddressId(Long addressId) {
         this.addressId = addressId;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", addressId=" + addressId +
+                '}';
     }
 }
