@@ -14,12 +14,16 @@ import java.util.List;
 
 @WebServlet("/contacts")
 public class ContactListServlet extends HttpServlet {
+    private final ContactRepository contactRepository = new ContactRepository();
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Contact> contacts = new ContactRepository().findAll();
-        RequestDispatcher view = request.getRequestDispatcher("jsp/contacts.jsp");
+        List<Contact> contacts = contactRepository.findAll();
+
         request.setAttribute("contacts", contacts);
+
+        RequestDispatcher view = request.getRequestDispatcher("jsp/contacts.jsp");
         view.forward(request, response);
     }
 }

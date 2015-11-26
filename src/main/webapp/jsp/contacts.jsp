@@ -21,5 +21,6 @@
     </c:forEach>
     </tbody>
 </table>
+<a href="contact?add">Add new contact</a>
 </body>
 </html>

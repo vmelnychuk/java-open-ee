@@ -33,5 +33,6 @@
     </tr>
     </tbody>
 </table>
+<a href="contacts">Back to contacts list</a>
 </body>
 </html>
