@@ -34,7 +34,7 @@ public class ContactServlet extends HttpServlet {
             request.setAttribute("contact", contact);
             request.setAttribute("address", address);
 
-            RequestDispatcher view = request.getRequestDispatcher("jsp/contact-details.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("jsp/view-contact.jsp");
             view.forward(request, response);
         }
     }
@@ -51,6 +51,7 @@ public class ContactServlet extends HttpServlet {
             String name = request.getParameter("name");
             Contact contact = new Contact(name, address.getId());
             contactRepository.create(contact);
+            response.sendRedirect("contact?id=" + contact.getId());
         }
         response.sendRedirect("contacts");
     }
