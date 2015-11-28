@@ -23,6 +23,16 @@ public class ContactServlet extends HttpServlet {
             throws ServletException, IOException {
         if(request.getParameter("add") != null) {
             request.getRequestDispatcher("jsp/add-contact.jsp").forward(request, response);
+        } else if (request.getParameter("edit") != null) {
+            long id = Long.parseLong(request.getParameter("id"));
+
+            Contact contact = contactRepository.find(id);
+            Address address = addressRepository.find(contact.getAddressId());
+
+            request.setAttribute("contact", contact);
+            request.setAttribute("address", address);
+
+            request.getRequestDispatcher("jsp/edit-contact.jsp").forward(request, response);
         } else {
             String contactId = request.getParameter("id");
             long id = Long.parseLong(contactId);
@@ -51,6 +61,23 @@ public class ContactServlet extends HttpServlet {
             String name = request.getParameter("name");
             Contact contact = new Contact(name, address.getId());
             contactRepository.create(contact);
+            response.sendRedirect("contact?id=" + contact.getId());
+        } else if (request.getParameter("edit") != null) {
+            long contactId = Long.parseLong(request.getParameter("id"));
+            Contact contact = contactRepository.find(contactId);
+            Address address = addressRepository.find(contact.getAddressId());
+
+            String newName = request.getParameter("name");
+            String newStreet = request.getParameter("street");
+            String newCity = request.getParameter("city");
+
+            contact.setName(newName);
+            address.setStreet(newStreet);
+            address.setCity(newCity);
+
+            contactRepository.update(contact);
+            addressRepository.update(address);
+
             response.sendRedirect("contact?id=" + contact.getId());
         }
         response.sendRedirect("contacts");
