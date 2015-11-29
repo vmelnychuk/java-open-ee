@@ -34,8 +34,7 @@ public class ContactServlet extends HttpServlet {
 
             request.getRequestDispatcher("jsp/edit-contact.jsp").forward(request, response);
         } else {
-            String contactId = request.getParameter("id");
-            long id = Long.parseLong(contactId);
+            long id = Long.parseLong(request.getParameter("id"));
             Contact contact = contactRepository.find(id);
 
             long addressId = contact.getAddressId();
@@ -56,11 +55,11 @@ public class ContactServlet extends HttpServlet {
             String street = request.getParameter("street");
             String city = request.getParameter("city");
             Address address = new Address(street, city);
-            addressRepository.create(address);
+            address = addressRepository.save(address);
 
             String name = request.getParameter("name");
             Contact contact = new Contact(name, address.getId());
-            contactRepository.create(contact);
+            contact = contactRepository.save(contact);
             response.sendRedirect("contact?id=" + contact.getId());
             return;
         } else if (request.getParameter("edit") != null) {
@@ -76,8 +75,8 @@ public class ContactServlet extends HttpServlet {
             address.setStreet(newStreet);
             address.setCity(newCity);
 
-            contactRepository.update(contact);
-            addressRepository.update(address);
+            contactRepository.save(contact);
+            addressRepository.save(address);
 
             response.sendRedirect("contact?id=" + contact.getId());
             return;
