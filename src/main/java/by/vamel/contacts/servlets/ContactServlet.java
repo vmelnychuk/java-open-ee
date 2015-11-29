@@ -62,6 +62,7 @@ public class ContactServlet extends HttpServlet {
             Contact contact = new Contact(name, address.getId());
             contactRepository.create(contact);
             response.sendRedirect("contact?id=" + contact.getId());
+            return;
         } else if (request.getParameter("edit") != null) {
             long contactId = Long.parseLong(request.getParameter("id"));
             Contact contact = contactRepository.find(contactId);
@@ -79,6 +80,13 @@ public class ContactServlet extends HttpServlet {
             addressRepository.update(address);
 
             response.sendRedirect("contact?id=" + contact.getId());
+            return;
+        } else if(request.getParameter("delete") != null) {
+            long contactId = Long.parseLong(request.getParameter("id"));
+            Contact contact = contactRepository.find(contactId);
+            Address address = addressRepository.find(contact.getAddressId());
+            contactRepository.delete(contact);
+            addressRepository.delete(address);
         }
         response.sendRedirect("contacts");
     }

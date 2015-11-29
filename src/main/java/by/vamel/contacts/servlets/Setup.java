@@ -15,13 +15,12 @@ public class Setup implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         AddressRepository addressRepository = new AddressRepository();
         addressRepository.init();
-        addressRepository.create(new Address("Ost", "Vin"));
+        Address address = new Address("Ost", "Vin");
+        addressRepository.create(address);
 
         ContactRepository contactRepository = new ContactRepository();
         contactRepository.init();
-        contactRepository.create(new Contact("vasyl", 0L));
-        contactRepository.create(new Contact("petro", 0L));
-        contactRepository.create(new Contact("ivan", 0L));
+        contactRepository.create(new Contact("vasyl", address.getId()));
     }
 
     @Override
