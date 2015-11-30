@@ -20,17 +20,17 @@ public class ContactServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         if(request.getParameter("add") != null) {
-            request.getRequestDispatcher("jsp/add-contact.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/add.jsp").forward(request, response);
         } else if (request.getParameter("edit") != null) {
             long id = Long.parseLong(request.getParameter("id"));
             Contact contact = contactRepository.find(id);
             request.setAttribute("contact", contact);
-            request.getRequestDispatcher("jsp/edit-contact.jsp").forward(request, response);
+            request.getRequestDispatcher("jsp/edit.jsp").forward(request, response);
         } else {
             long id = Long.parseLong(request.getParameter("id"));
             Contact contact = contactRepository.find(id);
             request.setAttribute("contact", contact);
-            RequestDispatcher view = request.getRequestDispatcher("jsp/view-contact.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("jsp/view.jsp");
             view.forward(request, response);
         }
     }

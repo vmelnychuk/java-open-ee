@@ -23,7 +23,7 @@ public class ContactListServlet extends HttpServlet {
 
         request.setAttribute("contacts", contacts);
 
-        RequestDispatcher view = request.getRequestDispatcher("jsp/contacts.jsp");
+        RequestDispatcher view = request.getRequestDispatcher("jsp/list.jsp");
         view.forward(request, response);
     }
 }
