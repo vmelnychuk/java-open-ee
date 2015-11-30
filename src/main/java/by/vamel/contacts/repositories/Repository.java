@@ -35,8 +35,13 @@ public class Repository<E> {
     }
 
     public List<E> findAll() {
+        List <E> result;
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
         Query query = entityManager
                 .createQuery("from " + entityClass.getSimpleName(), entityClass);
-        return query.getResultList();
+        result = query.getResultList();
+        transaction.commit();
+        return result;
     }
 }

@@ -6,8 +6,8 @@
 <body>
  <ul>
      <li>name: ${contact.name}</li>
-     <li>street: ${address.street}</li>
-     <li>city: ${address.city}</li>
+     <li>street: ${contact.address.street}</li>
+     <li>city: ${contact.address.city}</li>
  </ul>
  <a href="contact?edit=true&id=${contact.id}">Edit</a>
 
