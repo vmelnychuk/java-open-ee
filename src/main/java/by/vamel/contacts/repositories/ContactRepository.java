@@ -1,12 +1,9 @@
 package by.vamel.contacts.repositories;
 
 import by.vamel.contacts.entities.Contact;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 
-@org.springframework.stereotype.Repository
-public class ContactRepository extends Repository<Contact> {
+public interface ContactRepository extends JpaRepository<Contact, Long> {
 
-    public ContactRepository() {
-        super(Contact.class);
-    }
 }
