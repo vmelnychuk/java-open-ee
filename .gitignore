@@ -1,4 +1,11 @@
+# idea files
 .idea
 *.iml
 
+# maven files
 target
+
+# eclipse files
+.classpath
+.project
+.settings/
