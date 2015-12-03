@@ -3,17 +3,20 @@ package by.vamel.contacts.entities;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Contact {
+public class Office {
+
     @Id
     @GeneratedValue
     private Long id;
+    @OneToOne
+    private Address address;
     @Column
     private String name;
-    public Contact() {
-    }
 
-    public Contact(String name) {
+    public Office() {}
+
+    public Office(Address address, String name) {
+        this.address = address;
         this.name = name;
     }
 
@@ -25,19 +28,19 @@ public class Contact {
         this.id = id;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Contact{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                '}';
     }
 }
