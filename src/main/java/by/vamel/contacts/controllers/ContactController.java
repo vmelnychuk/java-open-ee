@@ -1,5 +1,6 @@
 package by.vamel.contacts.controllers;
 
+import by.vamel.contacts.entities.Address;
 import by.vamel.contacts.entities.Contact;
 import by.vamel.contacts.repositories.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,21 +39,34 @@ public class ContactController {
         model.addAttribute("contact", contactRepository.findOne(id));
         return "contact/edit";
     }
-    
-//    @RequestMapping(value = "/contact", method = RequestMethod.GET)
-//    public void getContact(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        if(request.getParameter("add") != null) {
-//            request.getRequestDispatcher("view/contact/add.jsp").forward(request, response);
-//        } else {
-//            long id = Long.parseLong(request.getParameter("id"));
-//            Contact contact = contactRepository.findOne(id);
-//            request.setAttribute("contact", contact);
-//
-//            if(request.getParameter("edit") != null) {
-//                request.getRequestDispatcher("view/contact/edit.jsp").forward(request, response);
-//            } else {
-//                request.getRequestDispatcher("view/contact/view.jsp");
-//            }
-//        }
-//    }
+
+    @RequestMapping(value = "/contact", params = "add", method = RequestMethod.POST)
+        public String postAddContact(@RequestParam String name,
+                                     @RequestParam String street,
+                                     @RequestParam String city) {
+        Address address = new Address(street, city);
+        Contact contact = new Contact(name, address);
+        contact = contactRepository.save(contact);
+        return "redirect:contact?id=" + contact.getId();
+    }
+
+    @RequestMapping(value = "/contact", params = "edit", method = RequestMethod.POST)
+    public String postEditContact(@RequestParam long id,
+                                  @RequestParam String name,
+                                  @RequestParam String street,
+                                  @RequestParam String city) {
+        Contact contact = contactRepository.findOne(id);
+        contact.setName(name);
+        Address address = contact.getAddress();
+        address.setStreet(street);
+        address.setCity(city);
+        contactRepository.save(contact);
+        return "redirect:contact?id=" + contact.getId();
+    }
+
+    @RequestMapping(value = "/contact", params = "delete", method = RequestMethod.POST)
+    public String postDeleteContact(@RequestParam long id) {
+        contactRepository.delete(id);
+        return "redirect:contacts";
+    }
 }
